@@ -1,7 +1,15 @@
 import "./App.css";
 
 function App() {
-  return <>HOME</>;
+  return (
+    <>
+      <div className="container">
+        <div className="row">
+          <div className="col">HOME</div>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default App;
