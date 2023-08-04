@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Main() {
   return (
     <section className="text-gray-600 body-font">
@@ -7,23 +9,23 @@ export default function Main() {
             We are making Stunning Websites
           </h1>
           <p className="mb-4 xl:w-3/4 text-gray-600 text-lg">
-            nine4 is a free to use website template for websites made with
-            Next.js and styled with Tailwind CSS
+            <strong>SBLOG</strong> is a free to use made with React.js and
+            styled with Tailwind CSS
           </p>
           <div className="flex justify-center">
-            <a
-              className="inline-flex items-center px-5 py-3 mt-2 font-medium text-white transition duration-500 ease-in-out transform bg-transparent border rounded-lg bg-gray-900"
-              href="https://github.com/r1/nine4-2/"
+            <Link
+              to="https://github.com/r1/nine4-2/"
+              className="inline-flex items-center px-5 py-3 mt-2 font-medium text-black hover:bg-gray-900 hover:text-white transition duration-500 ease-in-out transform bg-transparent border rounded-lg bg-gray-900"
             >
-              <span className="justify-center">Find out more</span>
-            </a>
+              <span className="justify-center">Get Start Here</span>
+            </Link>
           </div>
         </div>
-        <div className="xl:mr-44 sm:mr-0 sm:mb-28 mb-0 lg:mb-0 mr-48 md:pl-10">
+        <div className="xl:mr-44 sm:mr-0 sm:mb-28 mb-0 lg:mb-0 mr-48 md:pl-10 g327">
           <img
-            className="w-80 md:ml-1 ml-24"
+            className="w-80 md:ml-1 ml-24 shadow-2xl"
             alt="iPhone-12"
-            src="/images/iPhone-12-Mockup.png"
+            src="/images/hero01.jpg"
           ></img>
         </div>
       </div>
@@ -68,16 +70,20 @@ export default function Main() {
       </section>
       <div className="grr max-w-7xl pt-20 mx-auto text-center">
         <h1 className="mb-8 text-6xl Avenir font-semibold text-gray-900">
-          Less code, less effort.
+          Connect Fast, less effort.
         </h1>
         <h1 className="mb-8 text-2xl Avenir font-semibold text-gray-600 text-center">
-          Minify your CSS with Tailwind's built in PostCSS support.
+          Connectivity is among the most significant benefits of social media.
+          It can link countless users at any time, everywhere. Information could
+          be spread globally through social media and its connectedness, making
+          it simple for people to interact with one another. It results in
+          global relationships.
         </h1>
         <div className="container flex flex-col items-center justify-center mx-auto rounded-lg ">
           <img
-            className="object-cover object-center w-3/4 mb-10 g327 border rounded-lg shadow-md"
+            className="object-cover object-center w-3/4 mb-10 g327 border rounded-lg shadow-2xl"
             alt="Placeholder Image"
-            src="./images/placeholder.png"
+            src="./images/connect.jpg"
           ></img>
         </div>
       </div>
