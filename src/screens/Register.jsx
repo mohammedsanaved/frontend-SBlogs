@@ -8,16 +8,17 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secret, setSecret] = useState("");
+  console.log("data", name, email, password, secret);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(name, email, password, secret);
     axios
       .post("http://localhost:8000/api/register", {
-        name,
-        email,
-        password,
-        secret,
+        name: name,
+        email: email,
+        password: password,
+        secret: secret,
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
@@ -103,7 +104,6 @@ const Register = () => {
               className="no-underline border-b ml-3 border-blue text-blue"
               to="/login"
             >
-              {" "}
               Login
             </Link>
             .
