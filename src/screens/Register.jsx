@@ -2,8 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { toastError, toastSuccess } from "../components/UI/Toast";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,14 +17,25 @@ const Register = () => {
     e.preventDefault();
     // console.log(name, email, password, secret);
     axios
-      .post("http://localhost:8000/api/register", {
+      .post(`process.env.API/api/register`, {
         name: name,
         email: email,
         password: password,
         secret: secret,
       })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        toastSuccess(res.data.message);
+        navigate("/login");
+        console.log(res.data.message);
+      })
+      .catch((err) => {
+        toastError(err.message);
+        console.log(err);
+      });
+    setName("");
+    setEmail("");
+    setPassword("");
+    setSecret("");
   };
 
   return (

@@ -6,11 +6,14 @@ import Login from "./screens/Login";
 import Register from "./screens/Register";
 import About from "./screens/About";
 import Contact from "./screens/Contact";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <>
       <Router>
+        <ToastContainer />
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
