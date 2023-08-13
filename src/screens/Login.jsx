@@ -1,7 +1,37 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthForm from "../components/UI/AuthForm";
+import { toastError, toastSuccess } from "../components/UI/Toast";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const isButtonLoginDisabled = !email || !password;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log(name, email, password, secret);
+    setLoading(true);
+    axios
+      .post(`${server}/api/login`, {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        setLoading(false);
+        toastSuccess(res.data.message);
+        navigate("/");
+        console.log(res.data.message);
+      })
+      .catch((err) => {
+        setLoading(false);
+        toastError(err.response.data);
+        console.log(err);
+      });
+    setEmail("");
+    setPassword("");
+  };
   return (
     <>
       <div className="max-w-7xl flex flex-col mx-auto px-5 py-24 md:flex-row items-center mb-[85px]">
@@ -14,40 +44,16 @@ const Login = () => {
             styled with Tailwind CSS
           </p>
         </div>
-        <form action="">
-          <div className="px-4 py-6 rounded text-black w-full">
-            <input
-              type="text"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
-              name="email"
-              placeholder="Email"
-            />
-            <input
-              type="password"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
-              name="password"
-              placeholder="Password"
-            />
-
-            <button
-              type="submit"
-              className="w-full text-center py-3 font-medium text-black hover:bg-gray-900 hover:text-white transition duration-500 ease-in-out transform bg-transparent border  bg-gray-900"
-            >
-              Login
-            </button>
-          </div>
-          <div className="text-grey-dark mt-6">
-            Already have an account?
-            <Link
-              className="no-underline border-b ml-3 border-blue text-blue"
-              to="/register"
-            >
-              {" "}
-              SignUP
-            </Link>
-            .
-          </div>
-        </form>
+        <AuthForm
+          email={email}
+          password={password}
+          handleSubmit={handleSubmit}
+          setPassword={setPassword}
+          setEmail={setEmail}
+          loading={loading}
+          // isButtonDisabled={isButtonDisabled}
+          page="login"
+        />
       </div>
     </>
   );

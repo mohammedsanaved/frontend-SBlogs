@@ -4,6 +4,10 @@ import { useState } from "react";
 import axios from "axios";
 import { toastError, toastSuccess } from "../components/UI/Toast";
 import { useNavigate } from "react-router-dom";
+import { server } from "../main";
+// import { BiLoaderCircle } from "react-icons/bi";
+
+import AuthForm from "../components/UI/AuthForm";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -11,25 +15,29 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secret, setSecret] = useState("");
+  const [loading, setLoading] = useState(false);
   console.log("data", name, email, password, secret);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(name, email, password, secret);
+    setLoading(true);
     axios
-      .post(`process.env.API/api/register`, {
+      .post(`${server}/api/register`, {
         name: name,
         email: email,
         password: password,
         secret: secret,
       })
       .then((res) => {
+        setLoading(false);
         toastSuccess(res.data.message);
         navigate("/login");
         console.log(res.data.message);
       })
       .catch((err) => {
-        toastError(err.message);
+        setLoading(false);
+        toastError(err.response.data);
         console.log(err);
       });
     setName("");
@@ -50,79 +58,18 @@ const Register = () => {
             styled with Tailwind CSS
           </p>
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="px-4 py-6 rounded text-black w-full">
-            <input
-              value={name}
-              onChange={(e) => {
-                e.preventDefault();
-                setName(e.target.value);
-              }}
-              type="text"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
-              name="Name"
-              placeholder="Name"
-            />
-            <input
-              value={email}
-              onChange={(e) => {
-                e.preventDefault();
-                setEmail(e.target.value);
-              }}
-              type="email"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
-              name="email"
-              placeholder="Email"
-            />
-            <input
-              value={password}
-              onChange={(e) => {
-                e.preventDefault();
-                setPassword(e.target.value);
-              }}
-              type="password"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
-              name="password"
-              placeholder="Password"
-            />
-            <select
-              name=""
-              id=""
-              className="block border border-grey-light w-full p-3 rounded mb-4"
-            >
-              <option value="">What is your Pet Name ?</option>
-              <option value="">What is your Fav Color ?</option>
-              <option value="">What is your Car Number Plate ?</option>
-            </select>
-            <input
-              value={secret}
-              onChange={(e) => {
-                e.preventDefault();
-                setSecret(e.target.value);
-              }}
-              type="text"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
-              name="secret"
-              placeholder="Type Your Answer Here"
-            />
-            <button
-              type="submit"
-              className="w-full text-center py-3 font-medium text-black hover:bg-gray-900 hover:text-white transition duration-500 ease-in-out transform bg-transparent border  bg-gray-900"
-            >
-              Create Account
-            </button>
-          </div>
-          <div className="text-grey-dark mt-6">
-            Already have an account?
-            <Link
-              className="no-underline border-b ml-3 border-blue text-blue"
-              to="/login"
-            >
-              Login
-            </Link>
-            .
-          </div>
-        </form>
+        <AuthForm
+          name={name}
+          email={email}
+          password={password}
+          secret={secret}
+          setName={setName}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          setSecret={setSecret}
+          loading={loading}
+          handleSubmit={handleSubmit}
+        />
       </div>
     </>
   );
