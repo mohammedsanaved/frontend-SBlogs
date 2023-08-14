@@ -1,8 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/index";
+import { useContext } from "react";
 
 export default function Header() {
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const [state] = useContext(UserContext);
+  const navigate = useNavigate();
+  console.log("UserContext state in Header before:", state);
+
+  const logout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("auth");
+    // setState(null);
+    navigate("/login");
+  };
+  console.log("UserContext state in Header after:", state);
 
   return (
     <div className="fixed top-0 w-full z-30 clearNav md:bg-opacity-90 transition duration-300 ease-in-out">
@@ -64,32 +77,34 @@ export default function Header() {
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link
-                  className="inline-flex items-center px-4 py-2 font-medium text-gray-600 transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 border hover:bg-gray-900 hover:text-white"
-                  to={"/login"}
-                >
-                  <span className="justify-center">Login</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="inline-flex items-center px-4 py-2 font-medium text-gray-600 transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 border hover:bg-gray-900 hover:text-white"
-                  to={"/register"}
-                >
-                  <span className="justify-center">SignUp</span>
-                  {/* <svg
-                    className="w-3 h-3 fill-current text-gray-400 flex ml-2 -mr-1"
-                    viewBox="0 0 12 12"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.707 5.293L7 .586 5.586 2l3 3H0v2h8.586l-3 3L7 11.414l4.707-4.707a1 1 0 000-1.414z"
-                      fillRule="nonzero"
-                    />
-                  </svg> */}
-                </Link>
-              </li>
+              {state !== null ? (
+                <li>
+                  <div className="inline-flex items-center px-4 py-2 font-medium text-gray-600 transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 border hover:bg-gray-900 hover:text-white">
+                    <span onClick={logout} className="justify-center">
+                      Logout
+                    </span>
+                  </div>
+                </li>
+              ) : (
+                <>
+                  <li>
+                    <Link
+                      className="inline-flex items-center px-4 py-2 font-medium text-gray-600 transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 border hover:bg-gray-900 hover:text-white"
+                      to={"/login"}
+                    >
+                      <span className="justify-center">Login</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="inline-flex items-center px-4 py-2 font-medium text-gray-600 transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 border hover:bg-gray-900 hover:text-white"
+                      to={"/register"}
+                    >
+                      <span className="justify-center">SignUp</span>
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </nav>
         </div>

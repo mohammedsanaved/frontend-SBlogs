@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../context/index";
 
 export default function Main() {
+  const [state, setState] = useContext(UserContext);
   return (
     <section className="text-gray-600 body-font">
       <div className="max-w-7xl mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
@@ -21,10 +24,11 @@ export default function Main() {
             </Link>
           </div>
         </div>
+        {JSON.stringify(state)}
         <div className="xl:mr-44 sm:mr-0 sm:mb-28 mb-0 lg:mb-0 mr-48 md:pl-10 g327">
           <img
             className="w-80 md:ml-1 ml-24 shadow-2xl"
-            alt="iPhone-12"
+            alt="Hero01"
             src="/images/hero01.jpg"
           ></img>
         </div>

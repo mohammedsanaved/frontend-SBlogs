@@ -8,10 +8,11 @@ import About from "./screens/About";
 import Contact from "./screens/Contact";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserProvider } from "./context/index";
 
 function App() {
   return (
-    <>
+    <UserProvider>
       <Router>
         <ToastContainer />
         <Header />
@@ -24,7 +25,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
-    </>
+    </UserProvider>
   );
 }
 

@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthForm from "../components/UI/AuthForm";
 import { toastError, toastSuccess } from "../components/UI/Toast";
+import axios from "axios";
+import { server } from "../main";
+import { UserContext } from "../context/index";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const isButtonLoginDisabled = !email || !password;
+  // const isButtonLoginDisabled = !email || !password;
+  const [state, setState] = useState(UserContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(name, email, password, secret);
@@ -20,15 +24,21 @@ const Login = () => {
       })
       .then((res) => {
         setLoading(false);
-        toastSuccess(res.data.message);
+        toastSuccess(res);
         navigate("/");
-        console.log(res.data.message);
+        console.log(res);
+        setState({
+          user: res.user,
+          token: res.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(res.data));
       })
       .catch((err) => {
         setLoading(false);
-        toastError(err.response.data);
+        toastError(err.response);
         console.log(err);
       });
+
     setEmail("");
     setPassword("");
   };
