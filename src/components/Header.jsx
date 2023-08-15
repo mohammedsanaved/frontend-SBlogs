@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/index";
 import { useContext } from "react";
 
 export default function Header() {
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const [state] = useContext(UserContext);
+  const [state, setState] = useContext(UserContext);
   const navigate = useNavigate();
   console.log("UserContext state in Header before:", state);
 
   const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem("auth");
-    // setState(null);
+    setState(null);
     navigate("/login");
   };
   console.log("UserContext state in Header after:", state);
@@ -21,14 +21,14 @@ export default function Header() {
     <div className="fixed top-0 w-full z-30 clearNav md:bg-opacity-90 transition duration-300 ease-in-out">
       <div className="flex flex-col max-w-6xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
         <div className="flex flex-row items-center justify-between p-4">
-          <Link
+          <NavLink
             to="/"
             className="text-lg font-semibold rounded-lg tracking-widest focus:outline-none focus:shadow-outline"
           >
             <h1 className="text-4xl Avenir tracking-tighter text-gray-900 md:text-4x1 lg:text-3xl">
               SBlog
             </h1>
-          </Link>
+          </NavLink>
           <button
             className="text-white cursor-pointer leading-none px-3 py-1 md:hidden outline-none focus:outline-none "
             type="button"
@@ -61,47 +61,51 @@ export default function Header() {
         >
           <nav className="flex-col flex-grow ">
             <ul className="flex flex-grow justify-end flex-wrap items-center">
+              <li>{state !== null ? state.user.name : ""}</li>
               <li>
-                <Link
+                <NavLink
                   to="/about"
                   className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out"
                 >
                   About Us
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link
+                <NavLink
                   to={"/contact"}
                   className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out"
                 >
                   Contact
-                </Link>
+                </NavLink>
               </li>
               {state !== null ? (
                 <li>
-                  <div className="inline-flex items-center px-4 py-2 font-medium text-gray-600 transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 border hover:bg-gray-900 hover:text-white">
+                  <NavLink
+                    to={"#"}
+                    className="inline-flex items-center px-4 py-2 font-medium text-gray-600 transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 border hover:bg-gray-900 hover:text-white"
+                  >
                     <span onClick={logout} className="justify-center">
                       Logout
                     </span>
-                  </div>
+                  </NavLink>
                 </li>
               ) : (
                 <>
                   <li>
-                    <Link
+                    <NavLink
                       className="inline-flex items-center px-4 py-2 font-medium text-gray-600 transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 border hover:bg-gray-900 hover:text-white"
                       to={"/login"}
                     >
                       <span className="justify-center">Login</span>
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link
+                    <NavLink
                       className="inline-flex items-center px-4 py-2 font-medium text-gray-600 transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 border hover:bg-gray-900 hover:text-white"
                       to={"/register"}
                     >
                       <span className="justify-center">SignUp</span>
-                    </Link>
+                    </NavLink>
                   </li>
                 </>
               )}

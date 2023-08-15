@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthForm from "../components/UI/AuthForm";
 import { toastError, toastSuccess } from "../components/UI/Toast";
@@ -11,37 +11,43 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  // const isButtonLoginDisabled = !email || !password;
-  const [state, setState] = useState(UserContext);
-  const handleSubmit = (e) => {
+
+  // Getting context state and setter
+  const [state, setState] = useContext(UserContext);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(name, email, password, secret);
     setLoading(true);
-    axios
-      .post(`${server}/api/login`, {
-        email: email,
-        password: password,
-      })
-      .then((res) => {
-        setLoading(false);
-        toastSuccess(res);
-        navigate("/");
-        console.log(res);
-        setState({
-          user: res.user,
-          token: res.token,
-        });
-        localStorage.setItem("auth", JSON.stringify(res.data));
-      })
-      .catch((err) => {
-        setLoading(false);
-        toastError(err.response);
-        console.log(err);
+    try {
+      const { data } = await axios.post(`${server}/api/login`, {
+        email,
+        password,
       });
 
-    setEmail("");
-    setPassword("");
+      if (data.error) {
+        toastError(data.error);
+        setLoading(false);
+      } else {
+        // save in local storage
+        window.localStorage.setItem("auth", JSON.stringify(data));
+        // update context state
+        setState({
+          token: data.token,
+          user: data.user,
+        });
+        // navigate("/");
+        console.log("form Login token", data.token);
+        console.log("form Login user", data.user);
+      }
+    } catch (err) {
+      setLoading(false);
+    }
   };
+
+  if (state && state.token) {
+    navigate("/user/dashboard");
+  }
+
   return (
     <>
       <div className="max-w-7xl flex flex-col mx-auto px-5 py-24 md:flex-row items-center mb-[85px]">
