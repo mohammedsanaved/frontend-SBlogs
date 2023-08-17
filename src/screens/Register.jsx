@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { toastError, toastSuccess } from "../components/UI/Toast";
 import { useNavigate } from "react-router-dom";
 import { server } from "../main";
+import { UserContext } from "../context/index";
 // import { BiLoaderCircle } from "react-icons/bi";
 
 import AuthForm from "../components/UI/AuthForm";
@@ -16,6 +17,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [secret, setSecret] = useState("");
   const [loading, setLoading] = useState(false);
+  const [state] = useContext(UserContext);
   console.log("data", name, email, password, secret);
 
   const handleSubmit = (e) => {
@@ -45,6 +47,9 @@ const Register = () => {
     setPassword("");
     setSecret("");
   };
+  if (state && state.token) {
+    navigate("/");
+  }
 
   return (
     <>

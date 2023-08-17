@@ -59,3 +59,7 @@ a {
   -webkit-filter: none;
   transition: 0.4s;
 }
+.active {
+  color: rgb(0, 0, 0);
+  font-weight: 800;
+}

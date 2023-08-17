@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthForm from "../components/UI/AuthForm";
 import { toastError, toastSuccess } from "../components/UI/Toast";
@@ -44,9 +44,14 @@ const Login = () => {
     }
   };
 
-  if (state && state.token) {
-    navigate("/user/dashboard");
-  }
+  // if (state && state.token) {
+  //   navigate("/user/dashboard");
+  // }
+  useEffect(() => {
+    if (state && state.token) {
+      navigate("/user/dashboard");
+    }
+  }, [state && state.token]);
 
   return (
     <>
