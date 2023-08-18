@@ -10,8 +10,8 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-image: radial-gradient(
     circle at top right,
-    rgb(170, 0, 255),
-    #06bdf0 50%
+    whitesmoke,
+    #00c8ff 70%
   );
   height: auto;
 }

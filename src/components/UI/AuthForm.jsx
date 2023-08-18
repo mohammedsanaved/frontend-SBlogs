@@ -82,8 +82,8 @@ const AuthForm = ({
           transition duration-500 ease-in-out transform bg-transparent border bg-gray-900`}
           disabled={
             page === "login"
-              ? !email || !password
-              : !name || !email || !password || !secret
+              ? !email || !password || loading
+              : !name || !email || !password || !secret || loading
           }
         >
           {loading ? (
@@ -103,16 +103,22 @@ const AuthForm = ({
         </button>
       </div>
       {page === "login" ? (
-        <div className="text-grey-dark mt-6">
-          Not have an Account ?
-          <Link
-            className="no-underline border-b ml-3 border-blue text-blue"
-            to="/register"
-          >
-            Register
-          </Link>
-          .
-        </div>
+        <>
+          <div className="text-grey-dark mt-6">
+            Not have an Account ?
+            <Link
+              className="no-underline border-b ml-3 border-blue text-blue"
+              to="/register"
+            >
+              Register
+            </Link>
+          </div>
+          <div>
+            <span className="text-slate-800 font-bold hover:text-red-500">
+              <Link to={"/forgot-password"}>Forgot Password</Link>
+            </span>
+          </div>
+        </>
       ) : (
         <div className="text-grey-dark mt-6">
           Already have an account?
@@ -122,7 +128,6 @@ const AuthForm = ({
           >
             Login
           </Link>
-          .
         </div>
       )}
     </form>

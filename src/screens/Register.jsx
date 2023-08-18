@@ -20,36 +20,34 @@ const Register = () => {
   const [state] = useContext(UserContext);
   console.log("data", name, email, password, secret);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(name, email, password, secret);
-    setLoading(true);
-    axios
-      .post(`${server}/api/register`, {
-        name: name,
-        email: email,
-        password: password,
-        secret: secret,
-      })
-      .then((res) => {
-        setLoading(false);
-        toastSuccess(res.data.message);
-        navigate("/login");
-        console.log(res.data.message);
-      })
-      .catch((err) => {
-        setLoading(false);
-        toastError(err.response.data);
-        console.log(err);
+    try {
+      setLoading(true);
+      const { data } = await axios.post(`${server}/api/register`, {
+        name,
+        email,
+        password,
+        secret,
       });
-    setName("");
-    setEmail("");
-    setPassword("");
-    setSecret("");
+
+      if (data.error) {
+        toastError(data.error);
+      } else {
+        setName("");
+        setEmail("");
+        setPassword("");
+        setSecret("");
+        setOk(data.ok);
+        setLoading(false);
+      }
+    } catch (error) {
+      toastError(error.response.data);
+      setLoading(false);
+    }
   };
-  if (state && state.token) {
-    navigate("/");
-  }
+
+  if (state && state.token) navigate("/");
 
   return (
     <>

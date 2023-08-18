@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/index";
 import { useContext } from "react";
-// import DashboardBtn from "./UI/DashboardBtn";
-// import { Button, Menu, MenuItem } from "@mui/material";
 
 export default function Header() {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [state, setState] = useContext(UserContext);
   const [current, setCurrent] = useState("");
   const navigate = useNavigate();
+  console.log(window.location);
   console.log("UserContext state in Header:", state);
   useEffect(() => {
     setCurrent(window.location.pathname);

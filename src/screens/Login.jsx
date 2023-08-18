@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthForm from "../components/UI/AuthForm";
 import { toastError, toastSuccess } from "../components/UI/Toast";
 import axios from "axios";
@@ -76,6 +76,7 @@ const Login = () => {
           page="login"
         />
       </div>
+      
     </>
   );
 };
